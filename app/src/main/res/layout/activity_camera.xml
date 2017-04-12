@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="grungesoft.com.stopmotioncamera.CameraActivity">
 
+    <TextView
+        android:id="@+id/minutes_readout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:text="Next Picture in: "/>
+
 </android.support.constraint.ConstraintLayout>

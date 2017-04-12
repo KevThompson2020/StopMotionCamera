@@ -11,14 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/seek_bar_minutes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"/>
 
         <TextView
             android:id="@+id/minutes_readout"
@@ -26,14 +18,26 @@
             android:layout_height="wrap_content"
             android:textColor="@color/app_black"
             android:text="Minutes: "
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"/>
 
+        <SeekBar
+            android:id="@+id/seek_bar_minutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/app_light_green"/>
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/start_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/start_button"
@@ -41,6 +45,8 @@
             android:textColor="@color/app_white"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_button_blue" />
 
     </LinearLayout>
