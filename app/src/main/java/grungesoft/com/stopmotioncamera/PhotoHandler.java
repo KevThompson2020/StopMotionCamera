@@ -27,8 +27,9 @@ public class PhotoHandler implements PictureCallback {
 
         if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
 
-            Log.d(MainActivity.TAG, "Can't create directory to save image.");
-            Toast.makeText(context, "Can't create directory to save image.", Toast.LENGTH_LONG).show();
+            String errorString = context.getResources().getString(R.string.folder_creation_error);
+            Log.d(MainActivity.TAG,errorString);
+            Toast.makeText(context, errorString, Toast.LENGTH_LONG).show();
             return;
 
         }
@@ -42,16 +43,20 @@ public class PhotoHandler implements PictureCallback {
         File pictureFile = new File(filename);
 
         try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            fos.write(data);
-            fos.close();
-            Toast.makeText(context, "New Image saved:" + photoFile,Toast.LENGTH_LONG).show();
+            FileOutputStream fileOutStream = new FileOutputStream(pictureFile);
+            fileOutStream.write(data);
+            fileOutStream.close();
+            Toast.makeText(context, context.getResources().getString(R.string.new_image) + photoFile,Toast.LENGTH_LONG).show();
         } catch (Exception error) {
             Log.d(MainActivity.TAG, "File" + filename + "not saved: " + error.getMessage());
             Toast.makeText(context, "Image could not be saved.", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private File getDir() {
         File sdDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         return new File(sdDir, "CameraAPIDemo");
