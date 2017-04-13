@@ -1,8 +1,10 @@
 package grungesoft.com.stopmotioncamera;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (shouldAskPermissions()) {
+            askPermissions();
+            return;
+        }
 
 
         if (checkCameraHardware(this))
@@ -98,4 +107,37 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    protected boolean shouldAskPermissions() {
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1)
+        {
+            String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
+            int res = checkCallingOrSelfPermission(permission);
+            if(res == PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+        }
+
+        return false;
+    }
+
+    @TargetApi(23)
+    protected void askPermissions() {
+        String[] permissions = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.CAMERA",
+                "android.permission.ACCESS_FINE_LOCATION"
+        };
+        int requestCode = 200;
+        requestPermissions(permissions, requestCode);
+    }
+
 }
