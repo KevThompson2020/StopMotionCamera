@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.v("hello", "Start clicked");
                 Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 cameraIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(cameraIntent);

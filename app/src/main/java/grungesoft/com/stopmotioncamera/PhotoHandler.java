@@ -7,12 +7,11 @@ import java.util.Date;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.hardware.Camera.PictureCallback;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
-public class PhotoHandler implements PictureCallback {
+public class PhotoHandler implements Camera.PictureCallback {
 
     private final Context context;
 

@@ -65,8 +65,10 @@ public class CameraActivity extends AppCompatActivity {
 
         if(mCamera!=null)
         {
+            mCamera.stopPreview();
             mCamera.startPreview();
             mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext()));
+
         }
 
     }
