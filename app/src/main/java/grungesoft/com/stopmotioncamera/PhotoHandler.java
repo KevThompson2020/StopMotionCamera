@@ -25,41 +25,7 @@ public class PhotoHandler implements Camera.PictureCallback {
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
-
-        SavingPicture.getInstance().savePicture(data);
-
-        Util.log(MainActivity.TAG, "PhotoHandler - onPictureTaken");
-        File pictureFileDir = getDir();
-
-        if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
-
-            String errorString = context.getResources().getString(R.string.folder_creation_error);
-            Log.d(MainActivity.TAG,errorString);
-            Toast.makeText(context, errorString, Toast.LENGTH_LONG).show();
-            return;
-
-        }
-
-        Util.log(MainActivity.TAG, "PhotoHandler - GetDate");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-        String date = dateFormat.format(new Date());
-        String photoFile = "Picture_" + date + ".jpg";
-
-        String filename = pictureFileDir.getPath() + File.separator + photoFile;
-
-        File pictureFile = new File(filename);
-
-        try {
-            Util.log(MainActivity.TAG, "PhotoHandler - SaveStart");
-            FileOutputStream fileOutStream = new FileOutputStream(pictureFile);
-            fileOutStream.write(data);
-            fileOutStream.close();
-            Util.log(MainActivity.TAG, "PhotoHandler - SaveEnd");
-            Toast.makeText(context, context.getResources().getString(R.string.new_image) + photoFile,Toast.LENGTH_LONG).show();
-        } catch (Exception error) {
-            Log.d(MainActivity.TAG, "File" + filename + "not saved: " + error.getMessage());
-            Toast.makeText(context, "Image could not be saved.", Toast.LENGTH_LONG).show();
-        }
+        SavingPicture.getInstance().savePicture(context, data);
     }
 
     /**

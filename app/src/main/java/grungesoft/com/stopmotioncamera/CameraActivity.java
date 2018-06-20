@@ -4,17 +4,10 @@ import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.SurfaceView;
 import android.widget.TextView;
-
-import junit.runner.Version;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import android.support.v7.app.AppCompatActivity;
 import java.io.IOException;
 
 import grungesoft.com.stopmotioncamera.Utilities.Util;
@@ -98,6 +91,7 @@ public class CameraActivity extends AppCompatActivity {
             params.setPreviewSize(640, 480);
             params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             params.setPictureFormat(ImageFormat.JPEG);
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             mCamera.setParameters(params);
             mCamera.startPreview();
             mCamera.takePicture(null, null, null, new PhotoHandler(getApplicationContext()));

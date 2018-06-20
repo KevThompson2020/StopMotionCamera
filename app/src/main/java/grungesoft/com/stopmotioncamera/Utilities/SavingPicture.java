@@ -1,10 +1,17 @@
 package grungesoft.com.stopmotioncamera.Utilities;
 
+import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import grungesoft.com.stopmotioncamera.MainActivity;
+import grungesoft.com.stopmotioncamera.R;
 
 public class SavingPicture {
 
@@ -39,9 +46,22 @@ public class SavingPicture {
     /**
      *
      */
-    public void savePicture(byte[] data)
+    public void savePicture(Context context, byte[] data)
     {
+        String name = createSaveFileName();
+        File pictureFile = new File(name);
 
+        try {
+            Util.log(MainActivity.TAG, "PhotoHandler - SaveStart");
+            FileOutputStream fileOutStream = new FileOutputStream(pictureFile);
+            fileOutStream.write(data);
+            fileOutStream.close();
+            Util.log(MainActivity.TAG, "PhotoHandler - SaveEnd");
+            Toast.makeText(context, context.getResources().getString(R.string.new_image) + pictureFile.getPath(),Toast.LENGTH_LONG).show();
+        } catch (Exception error) {
+            Log.d(MainActivity.TAG, "File" + pictureFile.getPath() + "not saved: " + error.getMessage());
+            Toast.makeText(context, "Image could not be saved.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private String createSaveFileName()
@@ -50,8 +70,8 @@ public class SavingPicture {
         String date = dateFormat.format(new Date());
         String photoFile = "Picture_" + date + ".jpg";
 
-        String filename = pictureFileDir_.getPath() + File.separator + photoFile;
-        return "";
+        String filename = pictureFileDir_.getPath() + File.separator + FOLDER_NAME +  File.separator + photoFile;
+        return filename;
     }
 
 }
