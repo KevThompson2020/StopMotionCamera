@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.IOException;
 
+import grungesoft.com.stopmotioncamera.Utilities.Util;
+
 public class CameraLaunchIntentActivity extends AppCompatActivity {
 
     TextView timeCountDownTextView;
@@ -23,6 +25,8 @@ public class CameraLaunchIntentActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Util.log(MainActivity.TAG, "CameraLaunchIntentActivity - GetDate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
@@ -40,11 +44,11 @@ public class CameraLaunchIntentActivity extends AppCompatActivity {
                 int minutes = (int) ((millisUntilFinished / (1000*60)) % 60);
                 int hours   = (int) ((millisUntilFinished / (1000*60*60)) % 24);
 
-
                 timeCountDownTextView.setText("Next Picture in: " + hours + ":" + minutes + ":" + seconds);
             }
 
             public void onFinish() {
+                Util.log(MainActivity.TAG, "CameraLaunchIntentActivity - Timer onFinish");
                 triggerPhoto();
             }
         }.start();
@@ -56,7 +60,7 @@ public class CameraLaunchIntentActivity extends AppCompatActivity {
     private void triggerPhoto()
     {
 
-
+        Util.log(MainActivity.TAG, "CameraLaunchIntentActivity - triggerPhoto");
         final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/picFolder/";
         File newdir = new File(dir);
         newdir.mkdirs();

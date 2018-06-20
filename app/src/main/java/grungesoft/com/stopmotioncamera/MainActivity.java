@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,11 +15,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static java.security.AccessController.getContext;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import grungesoft.com.stopmotioncamera.Utilities.SavingPicture;
+import grungesoft.com.stopmotioncamera.Utilities.Util;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "StopMotionCameraApp";
     private int minutesSelected = 1;  // default to 60 mintues
     private TextView minutesReadout;
     private SeekBar minutesBar;
@@ -29,25 +36,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (shouldAskPermissions()) {
-            askPermissions();
-            return;
-        }
+        PermissionChecks();
+        SavingPicture.getInstance().FolderChecks();
 
 
-        if (checkCameraHardware(this))
-        {
+        if (checkCameraHardware(this)) {
             setupSeekBar();
             setupStartButton();
         }
-        else
-        {
+        else {
             Log.d(TAG, "No Camera detected");
         }
 
         context = this;
 
     }
+
+
 
     /**
      *
@@ -99,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *
+     * @param context
+     * @return
+     */
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera
@@ -109,6 +119,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     *
+     */
+    private void PermissionChecks()
+    {
+        if (shouldAskPermissions()) {
+            askPermissions();
+            return;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
     protected boolean shouldAskPermissions() {
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -118,17 +144,16 @@ public class MainActivity extends AppCompatActivity {
             if(res == PackageManager.PERMISSION_GRANTED){
                 return false;
             }
-            else
-            {
+            else {
                 return true;
             }
-
-
         }
-
         return false;
     }
 
+    /**
+     *
+     */
     @TargetApi(23)
     protected void askPermissions() {
         String[] permissions = {
