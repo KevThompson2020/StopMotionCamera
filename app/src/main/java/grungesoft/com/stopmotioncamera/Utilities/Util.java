@@ -78,9 +78,9 @@ public class Util {
     {
         File dir = new File(directoryFile + "/" + FolderName);
         if(dir.exists() && dir.isDirectory()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 

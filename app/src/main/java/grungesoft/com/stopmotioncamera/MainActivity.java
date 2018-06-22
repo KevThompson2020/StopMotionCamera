@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         if (checkCameraHardware(this)) {
             setupSeekBar();
             setupStartButton();
+            setupGallaryButton();
         }
         else {
             Log.d(TAG, "No Camera detected");
@@ -67,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
                 Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 cameraIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(cameraIntent);
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    private void setupGallaryButton()
+    {
+        Button startButton = (Button)findViewById(R.id.image_gallary_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("hello", "Start clicked");
+                Intent gallaryIntent = new Intent(MainActivity.this, GallaryViewActivity.class);
+                gallaryIntent.putExtra("delayDuration", minutesSelected);
+                startActivity(gallaryIntent);
             }
         });
     }

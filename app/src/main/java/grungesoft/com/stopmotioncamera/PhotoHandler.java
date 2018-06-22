@@ -25,6 +25,8 @@ public class PhotoHandler implements Camera.PictureCallback {
 
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
+
+
         SavingPicture.getInstance().savePicture(context, data);
     }
 

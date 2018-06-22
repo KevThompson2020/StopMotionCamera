@@ -1,6 +1,10 @@
 package grungesoft.com.stopmotioncamera.Utilities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,11 +39,12 @@ public class SavingPicture {
      *
      */
     public void FolderChecks() {
+
         if(!Util.checkIfFolderExists(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), FOLDER_NAME)) {
             Util.createFolder(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), FOLDER_NAME);
         }
 
-        pictureFileDir_ = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        pictureFileDir_ = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + File.separator +  FOLDER_NAME);
     }
 
 
@@ -54,6 +59,23 @@ public class SavingPicture {
         try {
             Util.log(MainActivity.TAG, "PhotoHandler - SaveStart");
             FileOutputStream fileOutStream = new FileOutputStream(pictureFile);
+
+            Bitmap realImage = BitmapFactory.decodeByteArray(data, 0, data.length);
+            ExifInterface exif=new ExifInterface(pictureFile.toString());
+
+            Log.d("EXIF value", exif.getAttribute(ExifInterface.TAG_ORIENTATION));
+            if(exif.getAttribute(ExifInterface.TAG_ORIENTATION).equalsIgnoreCase("6")){
+                realImage= rotate(realImage, 90);
+            } else if(exif.getAttribute(ExifInterface.TAG_ORIENTATION).equalsIgnoreCase("8")){
+                realImage= rotate(realImage, 270);
+            } else if(exif.getAttribute(ExifInterface.TAG_ORIENTATION).equalsIgnoreCase("3")){
+                realImage= rotate(realImage, 180);
+            } else if(exif.getAttribute(ExifInterface.TAG_ORIENTATION).equalsIgnoreCase("0")){
+                realImage= rotate(realImage, 90);
+            }
+
+            boolean bo = realImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutStream);
+
             fileOutStream.write(data);
             fileOutStream.close();
             Util.log(MainActivity.TAG, "PhotoHandler - SaveEnd");
@@ -64,13 +86,25 @@ public class SavingPicture {
         }
     }
 
+
+    public static Bitmap rotate(Bitmap bitmap, int degree) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+
+        Matrix mtx = new Matrix();
+        //       mtx.postRotate(degree);
+        mtx.setRotate(degree);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, w, h, mtx, true);
+    }
+
     private String createSaveFileName()
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
         String date = dateFormat.format(new Date());
         String photoFile = "Picture_" + date + ".jpg";
 
-        String filename = pictureFileDir_.getPath() + File.separator + FOLDER_NAME +  File.separator + photoFile;
+        String filename = pictureFileDir_.getPath() +  File.separator + photoFile;
         return filename;
     }
 
