@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -35,6 +37,9 @@ public class MovieConverterActivity extends AppCompatActivity {
         setupMovieButton();
     }
 
+    TextView feedbackText;
+    Handler handler = new Handler();
+    MMediaMuxer myMuxer = new MMediaMuxer();
 
     /**
      *
@@ -43,25 +48,71 @@ public class MovieConverterActivity extends AppCompatActivity {
     {
         final Activity test = this;
         Button startButton = (Button)findViewById(R.id.convert_movie_button);
+        feedbackText = (TextView)findViewById(R.id.convert_movie_feedback_text);
+
+        setFeedback("test");
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Util.log(LOG_TAG,"Convert Movie Clicked");
 
-                MMediaMuxer myMuxer = new MMediaMuxer();
 
-                int index;
-                for(index = 1; index <= 15; index++) {
-                    myMuxer.AddFrame(getFrame(index));
-                }
+create a service!
+                Thread t = new Thread() {
 
-                myMuxer.CreateVideo();
+                    public void run() {
+                        handler.post(new Runnable() {
+
+                            public void run() {
+                                setFeedback("test loop");
+
+
+                                int index;
+                                for(index = 1; index <= 15; index++) {
+                                    setFeedback("Getting Frame ( " + index + ") ");
+                                    byte[] bytes =getFrame(index);
+
+                                    setFeedback("Adding Frame ( " + index + ") ");
+  //                                  myMuxer.AddFrame(bytes);
+                                }
+                                setFeedback("Done - Creating video");
+//                                myMuxer.CreateVideo();
+
+                            }
+
+                        });
+                    }
+
+                };
+                t.start();
+
+
+                setFeedback("Starting");
+
+
             }
         });
     }
 
+    /**
+     *
+     * @param str
+     */
+    private void setFeedback(final String str)
+    {
+        Util.log(LOG_TAG,str);
 
+//        runOnUiThread(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+                feedbackText.setText(str);
+//            }
+//        });
 
+    }
 
     private byte[] getFrame(int index)
     {
