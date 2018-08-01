@@ -37,6 +37,14 @@ public class SavingPicture {
 
     /**
      *
+     * @return
+     */
+    public File getPictureFileDir() {
+        return pictureFileDir_;
+    }
+
+    /**
+     *
      */
     public void FolderChecks() {
 

@@ -26,6 +26,8 @@ import grungesoft.com.stopmotioncamera.Utilities.Util;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "StopMotionCameraApp";
+    public static final String LOG_TAG = "MainActivity";
+
     private int minutesSelected = 1;  // default to 60 mintues
     private TextView minutesReadout;
     private SeekBar minutesBar;
@@ -44,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
             setupSeekBar();
             setupStartButton();
             setupGallaryButton();
+            setupMovieButton();
         }
         else {
-            Log.d(TAG, "No Camera detected");
+            Util.log(LOG_TAG, "No Camera detected");
         }
 
         context = this;
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("hello", "Start clicked");
+                Util.log(LOG_TAG, "Galllary clicked");
                 Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
                 cameraIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(cameraIntent);
@@ -77,14 +80,32 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupGallaryButton()
     {
-        Button startButton = (Button)findViewById(R.id.image_gallary_button);
+        Button startButton = (Button)findViewById(R.id.gallary_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("hello", "Start clicked");
+                Util.log(LOG_TAG, "Movie clicked");
                 Intent gallaryIntent = new Intent(MainActivity.this, GallaryViewActivity.class);
                 gallaryIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(gallaryIntent);
+            }
+        });
+    }
+
+
+    /**
+     *
+     */
+    private void setupMovieButton()
+    {
+        Button startButton = (Button)findViewById(R.id.movie_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Util.log(LOG_TAG,"Start clicked");
+                Intent movieIntent = new Intent(MainActivity.this, MovieConverterActivity.class);
+                movieIntent.putExtra("delayDuration", minutesSelected);
+                startActivity(movieIntent);
             }
         });
     }

@@ -24,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CameraActivity" />
-        <activity android:name=".GallaryViewActivity"></activity>
+        <activity android:name=".GallaryViewActivity" />
+        <activity android:name=".MovieConverterActivity"></activity>
     </application>
 
 </manifest>

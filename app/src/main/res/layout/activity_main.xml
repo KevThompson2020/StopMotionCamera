@@ -50,10 +50,24 @@
             android:background="@drawable/rounded_button_blue" />
 
         <Button
-            android:id="@+id/image_gallary_button"
+            android:id="@+id/gallary_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/image_gallary"
+            android:text="@string/gallary_button"
+            android:textAllCaps="false"
+            android:textColor="@color/app_white"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_button_blue" />
+
+
+        <Button
+            android:id="@+id/movie_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_button"
             android:textAllCaps="false"
             android:textColor="@color/app_white"
             android:paddingLeft="8dp"
