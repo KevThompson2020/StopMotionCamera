@@ -26,6 +26,10 @@
         <activity android:name=".CameraActivity" />
         <activity android:name=".GallaryViewActivity" />
         <activity android:name=".MovieConverterActivity"></activity>
+
+        <service
+            android:name=".Services.MovieConverterService"
+            android:exported="false" />
     </application>
 
 </manifest>
