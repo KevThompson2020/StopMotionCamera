@@ -33,12 +33,13 @@ public class MovieConverterService extends IntentService {
 
 
         int index;
-        for(index = 1; index <= 15; index++) {
+        for(index = 1; index <= 2; index++) {
             Util.log("MovieConverter", "Get Frame " + index);
             byte[] bytes =getFrame(index);
 
-            Util.log("MovieConverter", "Add Frame " + index);
+            Util.log("MovieConverter", "Add Frame " + index + " of (" + bytes.length +") bytes");
             myMuxer_.AddFrame(bytes);
+
         }
         myMuxer_.CreateVideo();
 
