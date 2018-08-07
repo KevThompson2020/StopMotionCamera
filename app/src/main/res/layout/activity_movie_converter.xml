@@ -38,6 +38,15 @@
             android:textColor="@color/app_black"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:id="@+id/convert_movie_error_zone"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/app_pink"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

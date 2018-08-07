@@ -2,18 +2,19 @@ package grungesoft.com.stopmotioncamera.Services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
 
-import grungesoft.com.stopmotioncamera.Utilities.MMediaMuxer;
+import grungesoft.com.stopmotioncamera.Utilities.EncodeDecode;
 import grungesoft.com.stopmotioncamera.Utilities.SavingPicture;
 import grungesoft.com.stopmotioncamera.Utilities.Util;
+import grungesoft.com.stopmotioncamera.events.Events;
+import grungesoft.com.stopmotioncamera.events.MovieFinishEvent;
 
 public class MovieConverterService extends IntentService {
 
-    MMediaMuxer myMuxer_ = new MMediaMuxer();
+    public static final String LOG_TAG = "MEDIA_CONVERTER";
 
     /**
      * Constructor
@@ -31,38 +32,52 @@ public class MovieConverterService extends IntentService {
     {
         Util.log("MovieConverter", "Starting MovieConversion:");
 
-
-        int index;
-        for(index = 1; index <= 2; index++) {
-            Util.log("MovieConverter", "Get Frame " + index);
-            byte[] bytes =getFrame(index);
-
-            Util.log("MovieConverter", "Add Frame " + index + " of (" + bytes.length +") bytes");
-            myMuxer_.AddFrame(bytes);
-
+        String name = "test";
+        String location = SavingPicture.getInstance().getPictureFileDir().getAbsolutePath();
+        File directory = new File(location);
+        if (!directory.exists())
+        {
+            directory.mkdir();
         }
-        myMuxer_.CreateVideo();
+        File file = new File(directory, name + ".mp4");
+
+        ArrayList<File> images = new ArrayList();
+        for( int index = 0; index < 152; index++ )
+        {
+            File f = new File(getFramePath(index + 1));
+            if(f.exists()) {
+                Util.log(LOG_TAG, "adding file " + f.getAbsolutePath());
+                images.add(f);
+            }
+            else {
+                Util.log(LOG_TAG, "NO SUCH file " + f.getAbsolutePath());
+            }
+        }
 
 
+        try
+        {
+            EncodeDecode encodeDecoder = new EncodeDecode(images, file);
+            encodeDecoder.encodeDecodeVideoFromBufferToSurface(64, 64,800000);
+        } catch (Throwable e)
+        {
+            e.printStackTrace();
+        }
+
+        Events.eventBus.post(new MovieFinishEvent("conversion_finished"));
+
+        //return file.getAbsolutePath();
+        Util.log(LOG_TAG, "MOVIE CONVERTER COMPLETE");
     }
 
-
-    private byte[] getFrame(int index)
+    private String getFramePath(int index)
     {
+
+        String formatted = String.format("%03d", index);
         String path = SavingPicture.getInstance().getPictureFileDir().getPath();
-        String fileName = index + ".jpg";
-
+        String fileName = "frame_" + formatted + "_delay-0.11s.gif";
         String fullPath = path + "/" + fileName;
-
-        Bitmap bmp = BitmapFactory.decodeFile(fullPath);
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        bmp.recycle();
-
-
-        return byteArray;
-
+        Util.log("MEDIA_CONVERTER", fullPath);
+        return fullPath;
     }
 }

@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.opencv.android.OpenCVLoader;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         PermissionChecks();
         SavingPicture.getInstance().FolderChecks();
+
+
+        OpenCVLoader.initDebug();
+
 
 
         if (checkCameraHardware(this)) {
