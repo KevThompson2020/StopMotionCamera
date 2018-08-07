@@ -83,7 +83,14 @@ public class MovieConverterActivity extends AppCompatActivity {
             {
                 TextView text = (TextView)findViewById(R.id.convert_movie_feedback_text);
                 if(text!=null) {
-                    text.setText("Complete");
+
+                    if(event.typeId.contains("conversion_error")) {
+                        text.setText("Error");
+                    }
+                    else {
+                        text.setText("Complete");
+                    }
+
                 }
             }
         });

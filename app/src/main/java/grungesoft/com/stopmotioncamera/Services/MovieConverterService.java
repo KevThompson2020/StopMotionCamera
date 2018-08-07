@@ -44,7 +44,7 @@ public class MovieConverterService extends IntentService {
         ArrayList<File> images = new ArrayList();
         for( int index = 0; index < 152; index++ )
         {
-            File f = new File(getFramePath(index + 1));
+            File f = new File(getFramePath(index));
             if(f.exists()) {
                 Util.log(LOG_TAG, "adding file " + f.getAbsolutePath());
                 images.add(f);
@@ -58,11 +58,14 @@ public class MovieConverterService extends IntentService {
         try
         {
             EncodeDecode encodeDecoder = new EncodeDecode(images, file);
-            encodeDecoder.encodeDecodeVideoFromBufferToSurface(64, 64,800000);
+            encodeDecoder.encodeDecodeVideoFromBufferToSurface(480, 368,80000);
         } catch (Throwable e)
         {
             e.printStackTrace();
+            Events.eventBus.post(new MovieFinishEvent("conversion_error"));
+            return;
         }
+
 
         Events.eventBus.post(new MovieFinishEvent("conversion_finished"));
 
@@ -73,9 +76,12 @@ public class MovieConverterService extends IntentService {
     private String getFramePath(int index)
     {
 
-        String formatted = String.format("%03d", index);
+        String formatted = String.format("%02d", index);
         String path = SavingPicture.getInstance().getPictureFileDir().getPath();
-        String fileName = "frame_" + formatted + "_delay-0.11s.gif";
+        //String fileName = "frame_" + formatted + "_delay-0.11s.gif";
+        String fileName = "frame_" + formatted +"_delay-0.05s.jpg";
+
+
         String fullPath = path + "/" + fileName;
         Util.log("MEDIA_CONVERTER", fullPath);
         return fullPath;
