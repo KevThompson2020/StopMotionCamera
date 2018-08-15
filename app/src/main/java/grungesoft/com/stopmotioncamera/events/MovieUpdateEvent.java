@@ -3,9 +3,14 @@ package grungesoft.com.stopmotioncamera.events;
 
 public class MovieUpdateEvent
 {
-    public String typeId;
-    public MovieUpdateEvent(String id)
+    public String framePath_;
+    public int frameIndex_;
+    public int frameCount_;
+
+    public MovieUpdateEvent(final String path, final int frameIndex, final int frameCount)
     {
-        typeId=id;
+        this.framePath_=path;
+        this.frameIndex_ = frameIndex;
+        this.frameCount_ = frameCount;
     }
 }

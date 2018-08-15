@@ -22,6 +22,7 @@ import java.util.Arrays;
 import grungesoft.com.stopmotioncamera.events.ConversionErrorEvent;
 import grungesoft.com.stopmotioncamera.events.Events;
 import grungesoft.com.stopmotioncamera.events.MovieFinishEvent;
+import grungesoft.com.stopmotioncamera.events.MovieUpdateEvent;
 
 /**
  * Generates a series of video frames, encodes them, decodes them, and tests for
@@ -286,7 +287,7 @@ public class EncodeDecode
                     catch (Exception e)
                     {
                         Log.i(TAG, "need a different type of image");
-                        Events.eventBus.post(new ConversionErrorEvent("conversion_error", "need a different type of image", generateIndex));
+                        Events.eventBus.post(new ConversionErrorEvent(frames.get(generateIndex).getAbsolutePath(), "format error", generateIndex));
                         Arrays.fill(frameData, (byte) 0);
                     }
                     if (VERBOSE)
@@ -444,6 +445,7 @@ public class EncodeDecode
      */
     private void generateFrame(int frameIndex, int colorFormat, byte[] frameData)
     {
+        Events.eventBus.post(new MovieUpdateEvent(frames.get(frameIndex).getAbsolutePath(), frameIndex, frames.size()));
         // Set to zero. In YUV this is a dull green.
         Arrays.fill(frameData, (byte) 0);
 
