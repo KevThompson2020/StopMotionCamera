@@ -38,14 +38,33 @@
             android:textColor="@color/app_black"
             android:textSize="16sp" />
 
-        <LinearLayout
-            android:id="@+id/convert_movie_error_zone"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@color/app_pink"
-            android:orientation="vertical">
 
-        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:max="500"
+            android:progress="0"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/app_pink"
+            android:progressDrawable="@drawable/circular" />
+        
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/convert_movie_error_zone"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/app_pink"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
+
 
     </LinearLayout>
 
