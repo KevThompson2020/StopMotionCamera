@@ -33,7 +33,16 @@ public class AnimalGalleryAdapter extends RecyclerView.Adapter<AnimalGalleryAdap
         this.animalItemClickListener = animalItemClickListener;
     }
 
-    ....
+    @Override
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ImageViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_animal_square, parent, false));
+    }
+
+    @Override
+    public int getItemCount() {
+        return animalItems.size();
+    }
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
@@ -53,11 +62,13 @@ public class AnimalGalleryAdapter extends RecyclerView.Adapter<AnimalGalleryAdap
         });
     }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            animalItemClickListener.onAnimalItemClick(position, animalItem, holder.animalImageView);
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView animalImageView;
+
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            animalImageView = (ImageView) itemView.findViewById(R.id.item_animal_square_image);
         }
-    });
-}
+    }
 }

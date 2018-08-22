@@ -55,6 +55,6 @@ dependencies {
     implementation project(':openCVLibrary342')
 
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
 }
