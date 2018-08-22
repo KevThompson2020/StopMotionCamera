@@ -1,12 +1,7 @@
 package grungesoft.com.stopmotioncamera.Gallary;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-
-import grungesoft.com.stopmotioncamera.GallaryViewActivity;
 
 /**
  * Created by Kev on 23/02/2017.
@@ -14,7 +9,7 @@ import grungesoft.com.stopmotioncamera.GallaryViewActivity;
 
 public class GallaryItemDataStore {
 
-    static public Map<String, GallaryItem> items = new LinkedHashMap<String, GallaryItem>();
+    static public Map<String, AnimalItem> items = new LinkedHashMap<String, AnimalItem>();
 
     /**
      * Constructor
@@ -29,7 +24,7 @@ public class GallaryItemDataStore {
      * @param id
      * @param item
      */
-    public static void addItem(String id, GallaryItem item)
+    public static void addItem(String id, AnimalItem item)
     {
         items.put(id, item);
     }

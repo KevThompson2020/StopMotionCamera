@@ -1,7 +1,10 @@
 package grungesoft.com.stopmotioncamera;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,14 +12,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 
+import grungesoft.com.stopmotioncamera.Gallary.AnimalGalleryAdapter;
+import grungesoft.com.stopmotioncamera.Gallary.AnimalItem;
+import grungesoft.com.stopmotioncamera.Gallary.AnimalItemClickListener;
 import grungesoft.com.stopmotioncamera.Gallary.GallaryAdapter;
 import grungesoft.com.stopmotioncamera.Gallary.GallaryItemDataStore;
 
-public class GallaryViewActivity extends AppCompatActivity {
+public class GallaryViewActivity extends AppCompatActivity implements AnimalItemClickListener {
 
     private RecyclerView recyclerView;
-    private static GallaryAdapter mAdapter;
+    private static AnimalGalleryAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,21 @@ public class GallaryViewActivity extends AppCompatActivity {
     }
 
 
+    //Code to setup the RecyclerView and Adapter
+
+    @Override
+    public void onAnimalItemClick(int pos, AnimalItem animalItem, ImageView sharedImageView) {
+        Intent intent = new Intent(this, AnimalDetailActivity.class);
+        intent.putExtra(EXTRA_ANIMAL_ITEM, animalItem);
+        intent.putExtra(EXTRA_ANIMAL_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                sharedImageView,
+                ViewCompat.getTransitionName(sharedImageView));
+
+        startActivity(intent, options.toBundle());
+    }
 
 
     /**
@@ -39,7 +61,7 @@ public class GallaryViewActivity extends AppCompatActivity {
     {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        mAdapter = new GallaryAdapter(this, GallaryItemDataStore.items);
+        mAdapter = new AnimalGalleryAdapter(this, GallaryItemDataStore.items);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
