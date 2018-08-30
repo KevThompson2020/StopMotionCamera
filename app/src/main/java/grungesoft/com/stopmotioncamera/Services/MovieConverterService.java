@@ -44,7 +44,20 @@ public class MovieConverterService extends IntentService {
         }
         File file = new File(directory, name + ".mp4");
 
-        addFileList();
+//        addFileList();
+
+                ArrayList<File> images = new ArrayList();
+        for( int index = 0; index < 152; index++ )
+        {
+            File f = new File(getFramePath(index));
+            if(f.exists()) {
+                Util.log(LOG_TAG, "adding file " + f.getAbsolutePath());
+                images.add(f);
+            }
+            else {
+                Util.log(LOG_TAG, "NO SUCH file " + f.getAbsolutePath());
+            }
+        }
 
 
         try
@@ -68,7 +81,7 @@ public class MovieConverterService extends IntentService {
     private void addFileList()
     {
 
-        //        ArrayList<File> images = new ArrayList();
+//                ArrayList<File> images = new ArrayList();
 //        for( int index = 0; index < 152; index++ )
 //        {
 //            File f = new File(getFramePath(index));
@@ -82,15 +95,20 @@ public class MovieConverterService extends IntentService {
 //        }
 
 
-        File [] paths = Util.getAllImagePaths(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), SavingPicture.getInstance().getFolderName());
 
-        ArrayList<AnimalItem> animalItems = new ArrayList<>();
 
-        animalItems.add(new AnimalItem("Dog", context.getString(R.string.dog_blurb), "https://c1.staticflickr.com/1/188/417924629_6832e79c98_z.jpg?zz=1", AnimalItem.LOCATION_URL));
 
-        for(int index = 0; index < paths.length; index++) {
-            animalItems.add(new AnimalItem("image " + index, context.getString(R.string.dog_blurb), paths[index].getAbsolutePath(), AnimalItem.LOCATION_LOCAL_STORE));
-        }
+        //new
+
+//        File [] paths = Util.getAllImagePaths(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), SavingPicture.getInstance().getFolderName());
+//
+//        ArrayList<AnimalItem> animalItems = new ArrayList<>();
+//
+//        animalItems.add(new AnimalItem("Dog", context.getString(R.string.dog_blurb), "https://c1.staticflickr.com/1/188/417924629_6832e79c98_z.jpg?zz=1", AnimalItem.LOCATION_URL));
+//
+//        for(int index = 0; index < paths.length; index++) {
+//            animalItems.add(new AnimalItem("image " + index, context.getString(R.string.dog_blurb), paths[index].getAbsolutePath(), AnimalItem.LOCATION_LOCAL_STORE));
+//        }
 
     }
 
