@@ -24,6 +24,14 @@ public class SavingPicture {
 
     public final String FOLDER_NAME = "StopMotionCamera";
 
+    /**
+     * get the folder name
+     * @return
+     */
+    public String getFolderName() {
+        return FOLDER_NAME;
+    }
+
     //private constructor.
     private SavingPicture(){}
 

@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -17,10 +15,7 @@ import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
+import grungesoft.com.stopmotioncamera.Gallary.GallaryViewActivity;
 import grungesoft.com.stopmotioncamera.Utilities.SavingPicture;
 import grungesoft.com.stopmotioncamera.Utilities.Util;
 

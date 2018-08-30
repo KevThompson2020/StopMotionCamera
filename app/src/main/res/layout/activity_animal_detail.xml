@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="top"
-    tools:context=".AnimalDetailActivity"
+    tools:context=".Gallary.AnimalDetailActivity"
     android:orientation="vertical">
 
     <ImageView
@@ -29,12 +29,39 @@
         android:paddingTop="16dp">
 
         <TextView
+            android:id="@+id/file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="FileName"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/file_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="width"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/file_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="height"
+            android:textColor="@android:color/white" />
+
+
+        <TextView
             android:id="@+id/animal_detail_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-smallcaps"
             android:text="@string/lion_blurb"
             android:textColor="@android:color/white" />
+
+
 
     </ScrollView>
 

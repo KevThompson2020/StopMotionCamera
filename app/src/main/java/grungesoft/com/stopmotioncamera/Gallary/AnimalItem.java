@@ -9,6 +9,10 @@ import android.os.Parcelable;
  */
 public class AnimalItem implements Parcelable {
 
+    public final static int LOCATION_URL = 1;
+    public final static int LOCATION_LOCAL_STORE = 2;
+
+
     @SuppressWarnings("unused")
     public static final Parcelable.Creator<AnimalItem> CREATOR = new Parcelable.Creator<AnimalItem>() {
         @Override
@@ -24,18 +28,24 @@ public class AnimalItem implements Parcelable {
 
     public String name;
     public String detail;
-    public String imageUrl;
+    public String imageLocation;
+    public int locationType;
+    public String path = null;
 
-    public AnimalItem(String name, String detail, String imageUrl) {
+    public AnimalItem(String name, String detail, String imageLocation, int locationType) {
         this.name = name;
         this.detail = detail;
-        this.imageUrl = imageUrl;
+        this.locationType = locationType;
+        this.imageLocation = imageLocation;
     }
+
+
 
     protected AnimalItem(Parcel in) {
         name = in.readString();
         detail = in.readString();
-        imageUrl = in.readString();
+        imageLocation = in.readString();
+        locationType = in.readInt();
     }
 
     @Override
@@ -47,6 +57,7 @@ public class AnimalItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(detail);
-        dest.writeString(imageUrl);
+        dest.writeString(imageLocation);
+        dest.writeInt(locationType);
     }
 }
