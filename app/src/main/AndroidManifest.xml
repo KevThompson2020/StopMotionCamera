@@ -27,12 +27,14 @@
         <activity android:name=".CameraActivity" />
         <activity android:name=".Gallary.GallaryViewActivity" />
         <activity android:name=".MovieConverterActivity" />
+        <activity android:name=".PictureSetupActivity" />
         <activity android:name=".Gallary.AnimalDetailActivity" />
-
 
         <service
             android:name=".Services.MovieConverterService"
             android:exported="false" />
+
+        <activity android:name=".PictureSetupActivity"></activity>
     </application>
 
 </manifest>

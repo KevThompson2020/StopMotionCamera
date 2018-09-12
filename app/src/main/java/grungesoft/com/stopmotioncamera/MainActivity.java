@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "StopMotionCameraApp";
     public static final String LOG_TAG = "MainActivity";
 
-    private int minutesSelected = 1;  // default to 60 mintues
-    private TextView minutesReadout;
-    private SeekBar minutesBar;
     public static Context context;
 
     @Override
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (checkCameraHardware(this)) {
-            setupSeekBar();
             setupStartButton();
             setupGallaryButton();
             setupMovieButton();
@@ -64,14 +60,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setupStartButton()
     {
-        Button startButton = (Button)findViewById(R.id.start_button);
+        Button startButton = (Button)findViewById(R.id.picture_setup_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Util.log(LOG_TAG, "Galllary clicked");
-                Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                cameraIntent.putExtra("delayDuration", minutesSelected);
-                startActivity(cameraIntent);
+                Intent pictureSetupIntent = new Intent(MainActivity.this, PictureSetupActivity.class);
+                startActivity(pictureSetupIntent);
             }
         });
     }
@@ -87,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Util.log(LOG_TAG, "Movie clicked");
                 Intent gallaryIntent = new Intent(MainActivity.this, GallaryViewActivity.class);
-                gallaryIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(gallaryIntent);
             }
         });
@@ -105,44 +98,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Util.log(LOG_TAG,"Start clicked");
                 Intent movieIntent = new Intent(MainActivity.this, MovieConverterActivity.class);
-                movieIntent.putExtra("delayDuration", minutesSelected);
                 startActivity(movieIntent);
             }
         });
     }
-
-    /**
-     *
-     */
-    private void setupSeekBar()
-    {
-        minutesBar = (SeekBar)findViewById(R.id.seek_bar_minutes);
-        minutesBar.setMinimumHeight(1);
-
-        minutesReadout = (TextView)findViewById(R.id.minutes_readout);
-        minutesReadout.setText("Minutes: " + minutesSelected);
-        minutesBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChanged = 0;
-
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                int normalised = (int) ((float)progress * 0.6f);
-                progressChanged = 1 + normalised;
-                minutesSelected = progressChanged;
-                minutesReadout.setText("Minutes:" + minutesSelected);
-            }
-
-
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(MainActivity.this,"seek bar progress:"+progressChanged,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 
     /**
      *

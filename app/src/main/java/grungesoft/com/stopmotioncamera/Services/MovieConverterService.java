@@ -6,6 +6,7 @@ import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import grungesoft.com.stopmotioncamera.Gallary.AnimalItem;
 import grungesoft.com.stopmotioncamera.R;
@@ -46,24 +47,24 @@ public class MovieConverterService extends IntentService {
 
 //        addFileList();
 
-                ArrayList<File> images = new ArrayList();
-        for( int index = 0; index < 152; index++ )
-        {
-            File f = new File(getFramePath(index));
-            if(f.exists()) {
-                Util.log(LOG_TAG, "adding file " + f.getAbsolutePath());
-                images.add(f);
-            }
-            else {
-                Util.log(LOG_TAG, "NO SUCH file " + f.getAbsolutePath());
+
+        File [] paths = Util.getAllImagePaths(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), SavingPicture.getInstance().getFolderName());
+
+        Arrays.sort(paths);
+
+        ArrayList<File> images = new ArrayList();
+        for(int index = 0; index < paths.length; index++ ) {
+            if(paths[index].getName().contains("jpg")) {
+                images.add(paths[index]);
             }
         }
+
 
 
         try
         {
             EncodeDecode encodeDecoder = new EncodeDecode(images, file);
-            encodeDecoder.encodeDecodeVideoFromBufferToSurface(480, 368,80000);
+            encodeDecoder.encodeDecodeVideoFromBufferToSurface(146, 104,80000);
         } catch (Throwable e)
         {
             e.printStackTrace();
@@ -101,15 +102,6 @@ public class MovieConverterService extends IntentService {
         //new
 
 //        File [] paths = Util.getAllImagePaths(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), SavingPicture.getInstance().getFolderName());
-//
-//        ArrayList<AnimalItem> animalItems = new ArrayList<>();
-//
-//        animalItems.add(new AnimalItem("Dog", context.getString(R.string.dog_blurb), "https://c1.staticflickr.com/1/188/417924629_6832e79c98_z.jpg?zz=1", AnimalItem.LOCATION_URL));
-//
-//        for(int index = 0; index < paths.length; index++) {
-//            animalItems.add(new AnimalItem("image " + index, context.getString(R.string.dog_blurb), paths[index].getAbsolutePath(), AnimalItem.LOCATION_LOCAL_STORE));
-//        }
-
     }
 
     private String getFramePath(int index)

@@ -1,10 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">StopMotionCamera</string>
 
-    <string name="start_button">Start</string>
-    <string name="gallary_button">Gallary</string>
-    <string name="movie_button">Movie</string>
-    <string name="convert_movie_button">Convert</string>
+    <string name="start_button_title">Start</string>
+    <string name="picture_setup_button_title">Picture setup</string>
+    <string name="gallary_button_title">Gallary</string>
+    <string name="movie_button_title">Movie</string>
+    <string name="convert_movie_button_title">Convert</string>
 
     <string name="folder_creation_error">Unable to create folder to save images in</string>
     <string name="new_image">Saved Image </string>

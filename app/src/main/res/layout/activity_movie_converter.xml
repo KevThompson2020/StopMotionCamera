@@ -17,7 +17,7 @@
             android:id="@+id/convert_movie_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/convert_movie_button"
+            android:text="@string/convert_movie_button_title"
             android:textAllCaps="false"
             android:textColor="@color/app_white"
             android:paddingLeft="8dp"
